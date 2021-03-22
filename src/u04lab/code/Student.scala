@@ -1,7 +1,7 @@
 package u04lab.code
 
 import Lists._
-import u04lab.code.Lists.List.Cons // import custom List type (not the one in Scala stdlib)
+import u04lab.code.Lists.List.{Cons, Nil, append, filter, map} // import custom List type (not the one in Scala stdlib)
 
 trait Student {
   def name: String
@@ -17,21 +17,23 @@ trait Course {
 }
 
 case class StudentImpl(override val name: String, override val year: Int) extends Student {
-  override def enrolling(course: Course): Unit = ???
+  private var _courses: List[Course] = Nil()
 
-  override def courses: List[String] = ???
+  override def enrolling(course: Course): Unit = _courses = append(Cons(course, Nil()), _courses)
 
-  override def hasTeacher(teacher: String): Boolean = ???
+  override def courses: List[String] = map(_courses)(_.name)
+
+  override def hasTeacher(teacher: String): Boolean = filter(_courses)(_.teacher == teacher) != Nil()
 }
 
 case class CourseImpl(override val name: String, override val teacher: String) extends Course
 
 object Student {
-  def apply(name: String, year: Int = 2017): Student = ???
+  def apply(name: String, year: Int = 2017): Student = StudentImpl(name, year)
 }
 
 object Course {
-  def apply(name: String, teacher: String): Course = ???
+  def apply(name: String, teacher: String): Course = CourseImpl(name, teacher)
 }
 
 object Try extends App {
