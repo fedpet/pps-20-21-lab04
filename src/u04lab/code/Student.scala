@@ -16,6 +16,16 @@ trait Course {
   def teacher: String
 }
 
+case class StudentImpl(override val name: String, override val year: Int) extends Student {
+  override def enrolling(course: Course): Unit = ???
+
+  override def courses: List[String] = ???
+
+  override def hasTeacher(teacher: String): Boolean = ???
+}
+
+case class CourseImpl(override val name: String, override val teacher: String) extends Course
+
 object Student {
   def apply(name: String, year: Int = 2017): Student = ???
 }
