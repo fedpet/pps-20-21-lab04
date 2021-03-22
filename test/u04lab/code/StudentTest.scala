@@ -16,7 +16,7 @@ class StudentTest {
     val c2 = Course("PCD","Ricci")
     s1.enrolling(c1)
     s1.enrolling(c2)
-    assertEquals(Cons("PPS", Cons("PCD", Nil())), s1.courses)
+    assertEquals(Cons("PCD", Cons("PPS", Nil())), s1.courses)
     assertTrue(s1.hasTeacher("Ricci"))
     assertFalse(s1.hasTeacher("Unknown"))
   }
