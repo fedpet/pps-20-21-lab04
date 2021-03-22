@@ -14,6 +14,8 @@ object Lists extends App {
 
     def nil[A]: List[A] = Nil() // smart constructor
 
+    def of[A](elements: A*): List[A] = elements.map(Cons(_, nil)).reduce[List[A]]((l1, l2) => append(l1, l2))
+
     def sum(l: List[Int]): Int = l match {
       case Cons(h, t) => h + sum(t)
       case _ => 0
