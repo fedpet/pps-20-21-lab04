@@ -1,7 +1,9 @@
 package u04lab.code
 
 import Lists._
-import u04lab.code.Lists.List.{Cons, Nil, append, contains, filter, map} // import custom List type (not the one in Scala stdlib)
+import u04lab.code.Lists.List.{Cons, Nil, append, contains, filter, map}
+
+import scala.annotation.tailrec // import custom List type (not the one in Scala stdlib)
 
 trait Student {
   def name: String
@@ -36,6 +38,27 @@ object Course {
   def apply(name: String, teacher: String): Course = CourseImpl(name, teacher)
 }
 
+object sameTeacher {
+  def unapply(courses: List[Course]): scala.Option[String] = courses match {
+    case Cons(h,t) => List.foldLeft(t)(scala.Option(h.teacher))((acc, course) => acc.filter(_ == course.teacher))
+    case _ => scala.Option.empty
+  }
+  /* Optimized version which returns early
+   = {
+    @tailrec
+    def inner(cs: List[Course], commonTeacher: String): Option[String] = cs match {
+      case Cons(h,_) if h.teacher != commonTeacher => scala.Option.empty
+      case Cons(h,t) => inner(t, commonTeacher)
+      case Nil() => scala.Option(commonTeacher)
+    }
+    courses match {
+      case Cons(h,t) => inner(t, h.teacher)
+      case _ => scala.Option.empty
+    }
+  }
+  */
+}
+
 object Try extends App {
   val cPPS = Course("PPS","Viroli")
   val cPCD = Course("PCD","Ricci")
@@ -51,6 +74,12 @@ object Try extends App {
   s3.enrolling(cSDR)
   println(s1.courses, s2.courses, s3.courses) // (Cons(PCD,Cons(PPS,Nil())),Cons(PPS,Nil()),Cons(SDR,Cons(PCD,Cons(PPS,Nil()))))
   println(s1.hasTeacher("Ricci")) // true
+
+  val courses = List(Course("OOP","Viroli"), Course("PPS","Viroli"))
+  courses match {
+    case sameTeacher(t) => println(s"$courses have same teacher $t")
+    case _ => println(s"$courses have different teachers ")
+  }
 }
 
 /** Hints:
