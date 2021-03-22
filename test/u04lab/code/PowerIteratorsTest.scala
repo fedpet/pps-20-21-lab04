@@ -30,21 +30,21 @@ class PowerIteratorsTest {
     val b3 = Option.get(pi.next())
     val b4 = Option.get(pi.next())
     assertTrue(Option.isEmpty(pi.next())) // ne ho già prodotti 4, quindi il prossimo è un opzionale vuoto
-    assertEquals(List.of(b1,b2,b3,b4), pi.allSoFar()) // ho prodotto proprio b1,b2,b3,b4
+    assertEquals(List(b1,b2,b3,b4), pi.allSoFar()) // ho prodotto proprio b1,b2,b3,b4
   }
 
   @Test def testFromList() {
-    val pi = factory.fromList(List.of("a", "b", "c")) // pi produce a,b,c
+    val pi = factory.fromList(List("a", "b", "c")) // pi produce a,b,c
     assertEquals(pi.next(), Option.of("a"))
     assertEquals(pi.next(), Option.of("b"))
-    assertEquals(pi.allSoFar(), List.of("a", "b")) // fin qui a,b
+    assertEquals(pi.allSoFar(), List("a", "b")) // fin qui a,b
     assertEquals(pi.next(), Option.of("c"))
-    assertEquals(pi.allSoFar(), List.of("a", "b", "c")) // fin qui a,b,c
+    assertEquals(pi.allSoFar(), List("a", "b", "c")) // fin qui a,b,c
     assertTrue(Option.isEmpty(pi.next())) // non c'è più niente da produrre
   }
 
   @Test def testReversedOnList() {
-    val pi = factory.fromList(List.of("a", "b", "c"))
+    val pi = factory.fromList(List("a", "b", "c"))
     assertEquals(pi.next(), Option.of("a"))
     assertEquals(pi.next(), Option.of("b"))
     val pi2 = pi.reversed() //pi2 itera su b,a
@@ -52,7 +52,7 @@ class PowerIteratorsTest {
     assertTrue(Option.isEmpty(pi.next()))
     assertEquals(pi2.next(), Option.of("b"))
     assertEquals(pi2.next(), Option.of("a"))
-    assertEquals(pi2.allSoFar(), List.of("b", "a")) // pi2 ha prodotto b,a
+    assertEquals(pi2.allSoFar(), List("b", "a")) // pi2 ha prodotto b,a
     assertTrue(Option.isEmpty(pi.next()))
   }
 
