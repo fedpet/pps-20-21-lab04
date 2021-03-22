@@ -6,7 +6,7 @@ import u04lab.code.Lists.List.{Cons, Nil, append, contains, filter, map} // impo
 trait Student {
   def name: String
   def year: Int
-  def enrolling(course: Course): Unit // the student participates to a Course
+  def enrolling(course: Course*): Unit // the student participates to a Course
   def courses: List[String] // names of course the student participates to
   def hasTeacher(teacher: String): Boolean // is the student participating to a course of this teacher?
 }
@@ -19,7 +19,7 @@ trait Course {
 case class StudentImpl(override val name: String, override val year: Int) extends Student {
   private var _courses: List[Course] = Nil()
 
-  override def enrolling(course: Course): Unit = _courses = append(Cons(course, Nil()), _courses)
+  override def enrolling(course: Course*): Unit = course.map(Cons(_, Nil())).foreach(c => _courses = append(c, _courses))
 
   override def courses: List[String] = map(_courses)(_.name)
 
