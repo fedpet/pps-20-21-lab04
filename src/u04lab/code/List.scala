@@ -26,9 +26,10 @@ object Lists extends App {
       case _ => l2
     }
 
+    @tailrec
     def drop[A](l: List[A], n: Int): List[A] = l match {
       case _ if n<=0 || l==Nil() => l
-      case Cons(h,t) => drop(t,n-1)
+      case Cons(_,t) => drop(t,n-1)
     }
 
     def map[A,B](l: List[A])(f: A => B): List[B] = l match {
@@ -75,7 +76,7 @@ object Lists extends App {
 
     @tailrec
     def contains[A](l: List[A], element: A): Boolean = l match {
-      case Cons(h, _) if h == element => true
+      case Cons(`element`, _) => true
       case Cons(_, t) => contains(t, element)
       case _ => false
     }

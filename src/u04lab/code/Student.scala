@@ -21,7 +21,7 @@ trait Course {
 case class StudentImpl(override val name: String, override val year: Int) extends Student {
   private var _courses: List[Course] = Nil()
 
-  override def enrolling(course: Course*): Unit = course.map(Cons(_, Nil())).foreach(c => _courses = append(c, _courses))
+  override def enrolling(courses: Course*): Unit = courses.map(Cons(_, Nil())).foreach(c => _courses = append(_courses, c))
 
   override def courses: List[String] = map(_courses)(_.name)
 

@@ -11,7 +11,6 @@ trait PowerIterator[A] {
 }
 
 trait PowerIteratorsFactory {
-
   def incremental(start: Int, successive: Int => Int): PowerIterator[Int]
   def fromList[A](list: List[A]): PowerIterator[A]
   def randomBooleans(size: Int): PowerIterator[Boolean]
@@ -47,7 +46,9 @@ class PowerIteratorsFactoryImpl extends PowerIteratorsFactory {
         Stream.iterate(list) {
           case List.Cons(_, t) => t
           case _ => List.nil
-        })(_ != List.nil)) {
+        }
+      )(_ != List.nil)
+    ) {
       case List.Cons(h, _) => h
     })
 

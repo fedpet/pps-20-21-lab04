@@ -14,10 +14,8 @@ class StudentTest {
 
   @Test def testStudentEnrolling() {
     val s1 = Student("mario",2015)
-    val c1 = Course("PPS","Viroli")
-    val c2 = Course("PCD","Ricci")
-    s1.enrolling(c1, c2)
-    assertEquals(Cons("PCD", Cons("PPS", Nil())), s1.courses)
+    s1.enrolling(Course("PPS","Viroli"), Course("PCD","Ricci"))
+    assertEquals(Cons("PPS", Cons("PCD", Nil())), s1.courses)
     assertTrue(s1.hasTeacher("Ricci"))
     assertFalse(s1.hasTeacher("Unknown"))
   }
